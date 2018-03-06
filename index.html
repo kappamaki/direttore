@@ -14,16 +14,19 @@
 </head>
 <body>
   <div class="container">
-    <div class="row">
+    <div>
       <div id="container"></div>
     </div>
-    <div class="row">
-      <input type="range" min="60" max="300" value="80" class="slider" name="tempo" id="tempo" step="1">
-      <output for="tempo"></output>
+    <div class="text-center">
+      <h1><span id="tempoBpm"></span></h1>
     </div>
-    <div class="row">
-      <button id="btnStart" class="btn btn-primary btn-block">Start!</output>
-      <button id="btnStop" class="btn btn-primary btn-block">Stop</output>
+    <div>
+      <input type="range" class="slider" name="tempo" id="tempo" step="1"
+        min="60" max="300" value="80"
+      >
+    </div>
+    <div class="text-center">
+      <button id="btnStartStop" class="btn btn-primary btn-lg">start</button>
     </div>
   </div>
 </body>

@@ -19,7 +19,7 @@ $( document ).ready(function() {
   var circle = new Konva.Circle({
     x: stage.getWidth() / 2,
     y: stage.getHeight() / 2,
-    radius: 20,
+    radius: 60,
     fill: 'red',
   });
 
@@ -35,7 +35,7 @@ $( document ).ready(function() {
     el = $(this);
     // Move bubble
     el
-     $("output")
+     $("#tempoBpm")
      .text(el.val());
    })
    // Fake a input to position bubble at page load
@@ -49,11 +49,19 @@ $( document ).ready(function() {
   var centerY = stage.getHeight() / 2;
 
   var pt0, pt1;
+  var prevTime = 0;
+  var animPct = 0.0;
   var anim = new Konva.Animation(function(frame) {
       var period = 60000 / $("#tempo").val() * measureLength;
-      pt0 = Math.floor(frame.time / period * measureLength) % measureLength;
-      pt1 = Math.floor(frame.time / period * measureLength + 1) % measureLength;
-      var progress = (frame.time / period * measureLength) % measureLength - pt0;
+
+      animPct += ((frame.time - prevTime) / period);
+      if (animPct > 1)
+        animPct -= 1;
+      prevTime = frame.time;
+
+      pt0 = Math.floor(animPct * measureLength) % measureLength;
+      pt1 = Math.floor(animPct * measureLength + 1) % measureLength;
+      var progress = animPct * measureLength - pt0;
 
       if (progress <= 0.2)
         circle.fill('orange');
@@ -69,10 +77,13 @@ $( document ).ready(function() {
         + centerY);
   }, layer);
 
-  $("#btnStart").click(function() {
-    anim.start();
-  });
-  $("#btnStop").click(function() {
-    anim.stop();
+  $('#btnStartStop').click(function() {
+    if(anim.isRunning()) {
+      anim.stop();
+      $('#btnStartStop').html('start');
+    } else {
+      anim.start();
+      $('#btnStartStop').html('stop');
+    }
   });
 });

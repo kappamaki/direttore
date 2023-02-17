@@ -63,10 +63,7 @@ $( document ).ready(function() {
       pt1 = Math.floor(animPct * measureLength + 1) % measureLength;
       var progress = animPct * measureLength - pt0;
 
-      if (progress <= 0.2)
-        circle.fill('orange');
-      else
-        circle.fill('red');
+      circle.fill(`rgba(255,${192 - (192 * progress)},0,255)`);
       circle.setX(
         (fourFour[pt0].x * amplitude * (1-progress)) +
         (fourFour[pt1].x * amplitude * progress) +
